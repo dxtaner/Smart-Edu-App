@@ -9,7 +9,6 @@ app.set("view engine", "ejs");
 // middleware
 app.use(express.static("pulbic"))
 
-
 // Routes
 app.use("/",pageRoute)
 
