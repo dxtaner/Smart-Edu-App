@@ -9,7 +9,7 @@ exports.createCourse = async (req, res) => {
             course,
         })
     }
-    catch {
+    catch (error){
         res.status(400).json({
             status: "fail",
             error,
@@ -17,3 +17,19 @@ exports.createCourse = async (req, res) => {
     }
 
 }
+
+exports.getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find();
+
+        res.status(200).render('courses', {
+            courses,
+            page_name: 'courses',
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            error,
+        });
+    }
+};
