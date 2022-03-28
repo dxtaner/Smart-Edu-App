@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.route("/").get(pageController.getİndexPage);
 router.route("/about").get(pageController.getAboutPage);
+router.route('/register').post(pageController.getRegisterPage);
 
 module.exports = router;
