@@ -27,12 +27,25 @@ exports.getAllCourses = async (req, res) => {
 
         const categorySlug = req.query.categories;
         const category = await Category.findOne({ slug: categorySlug })
+        const query = req.query.search;
+        if (query) {
+            filter = { name: query }
+        }
+        if (!query && !categorySlug) {
+            filter.name = "",
+                filter.category = null
+        }
 
         let filter = {}
         if (categorySlug) {
             filter = { category: category._id }
         }
-        const courses = await Course.find(filter).sort("-createdAt");
+        const courses = await Course.find({
+            $or: [
+                { name: { $regex: '.*' + filter.name + '.*', $options: 'i' } },
+                { category: filter.category }
+            ]
+        }).sort("-createdAt").populate('user');
 
         const categories = await Category.find();
 
@@ -52,11 +65,13 @@ exports.getAllCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
     try {
         const course = await Course.findOne({ slug: req.params.slug }).populate('user')
-        const user = await User.findById({slug:req.session.userID})
+        const user = await User.findById({ slug: req.session.userID })
+        const categories = await Category.find();
         res.status(200).render('course', {
             course,
             page_name: 'courses',
-            user
+            user,
+            categories
         });
     } catch (error) {
         res.status(400).json({
