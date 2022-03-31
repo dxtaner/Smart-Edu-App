@@ -73,6 +73,7 @@ exports.sendEmail = async (req, res) => {
 
     } catch (err) {
         req.flash("error", `Something happened!`);
+        res.status(400).redirect('contact');
     }
 };
 
