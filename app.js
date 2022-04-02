@@ -11,7 +11,7 @@ const userRoute = require("./routes/userRoute");
 const app = express();
 
 
-mongoose.connect('mongodb://localhost/smartedu-db', {
+mongoose.connect('mongodb+srv://taner:oQTcm6JSJ7qN1ZMJ@cluster0.pytif.mongodb.net/smartedu-db?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -60,7 +60,7 @@ app.use("/courses", courseRoute)
 app.use("/categories", categoryRoute)
 app.use("/users", userRoute)
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`App Started ${port}`)
 })
