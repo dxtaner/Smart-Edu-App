@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const flash = require('connect-flash');
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const flash = require("connect-flash");
 const methodOverride = require("method-override")
 const pageRoute = require("./routes/pageRoute")
 const courseRoute = require("./routes/courseRoute")
@@ -14,26 +14,26 @@ const app = express();
 mongoose.connect('mongodb://localhost/smartedu-db', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // useFindAndModify: false,
-    // useCreateIndex: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 }).then(() => {
     console.log("DB connect succesfully")
 });
 
 // template engine 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 // global variable 
 global.userIN = null;
 
 // middleware
-app.use(express.static("pulbic"))
+app.use(express.static('public'))
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 // for parsing application/x-www-form-urlencoded
 app.use(
     session({
-        secret: 'my_keyboard_cat', // Buradaki texti değiştireceğiz.
+        secret: 'my_keyboard_cat', 
         resave: false,
         saveUninitialized: true,
         store: MongoStore.create({ mongoUrl: 'mongodb://localhost/smartedu-db' })
