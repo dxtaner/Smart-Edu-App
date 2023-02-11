@@ -11,7 +11,7 @@
     "portal",
     "node.js"
   ],
-  "author": "Gürcan Çekiç",
+  "author": "Lvo",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
